@@ -1,4 +1,4 @@
-import {getCategories} from './modules/api.js'
+import {getCategories, getQuestions} from './modules/api.js'
 
 
 function setCategoryListOptions(data){
@@ -11,3 +11,19 @@ function setCategoryListOptions(data){
 
 
 getCategories(setCategoryListOptions)
+
+const form = document.querySelector('#questions-form')
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const numQuestions = form.querySelector('#numQuestions').value
+    const difficulty = form.querySelector('#difficulty').value
+    const category = form.querySelector('#category').value
+    
+    getQuestions({numQuestions, difficulty, category, callback: startGame})
+})
+
+function startGame(questions){
+    console.log(questions)
+}

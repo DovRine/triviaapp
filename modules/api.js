@@ -5,4 +5,10 @@ async function getCategories(callback) {
   callback(data);
 }
 
-export { getCategories };
+async function getQuestions({numQuestions, difficulty, category, callback}){
+    const url = `https://opentdb.com/api.php?amount=${numQuestions}&category=${category}&difficulty=${difficulty}&type=multiple`
+    const response = await fetch(url)
+    const data = await response.json()
+    callback(data.results)
+}
+export { getCategories, getQuestions };
