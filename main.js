@@ -1,5 +1,5 @@
 import {getCategories, getQuestions} from './modules/api.js'
-
+import {startGame} from './modules/game.js'
 
 function setCategoryListOptions(data){
     const categorySelect = document.querySelector("#category");
@@ -24,6 +24,3 @@ form.addEventListener('submit', (e) => {
     getQuestions({numQuestions, difficulty, category, callback: startGame})
 })
 
-function startGame(questions){
-    console.log(questions)
-}
