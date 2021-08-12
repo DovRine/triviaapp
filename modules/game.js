@@ -14,6 +14,9 @@ function checkUserAnswer(e) {
   const selectedIdx = btn.getAttribute("data-idx");
   setBtnColor(btn, selectedIdx);
   colorCorrectAnswerButton();
+  if (currentQuestion === questions.length - 1) {
+    btnNext.innerHTML = "Play Again";
+  }
   btnNext.classList.remove("hide");
 }
 function colorCorrectAnswerButton() {
@@ -60,6 +63,10 @@ function showCurrentQuestion() {
   btnNext.classList.add("hide");
 }
 function showNextQuestion() {
+  if (btnNext.innerHTML === "Play Again") {
+    window.location = window.location;
+    return;
+  }
   currentQuestion++;
   resetAnswerBtnStyles();
   showCurrentQuestion();
