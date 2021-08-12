@@ -9,22 +9,35 @@
     <script type="module" src="main.js"></script>
   </head>
   <body>
+    <h1>Trivia Game</h1>
     <form id="questions-form">
-      <input
-        id="numQuestions"
-        type="number"
-        value="5"
-        min="5"
-        max="25"
-        step="1"
-      />
-      <select id="category"></select>
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-      <input type="submit" value="Let's Play!" />
+      <div class="form-control">
+        <label for="numQuestions"> # Questions: </label>
+        <input
+          aria-label="Number of Questions"
+          id="numQuestions"
+          type="number"
+          value="5"
+          min="5"
+          max="25"
+          step="1"
+        />
+      </div>
+      <div class="form-control">
+        <label for="category"> Category: </label>
+        <select aria-label="Category" id="category"></select>
+      </div>
+      <div class="form-control">
+        <label for="difficulty"> Difficulty: </label>
+        <select aria-label="Difficulty" id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div class="form-control">
+        <input type="submit" aria-label="Let's Play" value="Let's Play!" />
+      </div>
     </form>
     <section id="question" class="hide">
       <div class="question"></div>
