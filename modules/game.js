@@ -22,7 +22,7 @@ function checkUserAnswer(e) {
 function colorCorrectAnswerButton() {
   for (let answerBtn of answerElements) {
     if (isCorrectAnswer(answerBtn.getAttribute("data-idx"))) {
-      answerBtn.style.background = "lime";
+      answerBtn.classList.add("correct-answer");
     }
   }
 }
@@ -36,11 +36,14 @@ function isCorrectAnswer(idx) {
 }
 function resetAnswerBtnStyles() {
   for (let answerBtn of answerElements) {
-    answerBtn.style.background = "unset";
+    answerBtn.classList.remove("correct-answer")
+    answerBtn.classList.remove("incorrect-answer")
   }
 }
 function setBtnColor(btn, selectedIdx) {
-  btn.style.background = isCorrectAnswer(selectedIdx) ? "lime" : "red";
+  btn.classList.add(
+    isCorrectAnswer(selectedIdx) ? "correct-answer" : "incorrect-answer"
+  );
 }
 function setGameQuestions(rawQuestions) {
   questions = rawQuestions.map((q) => {

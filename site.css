@@ -1,3 +1,10 @@
 .hide{
     display: none !important;
 }
+
+.correct-answer{
+    background: lime;
+}
+.incorrect-answer {
+    background: red;
+}
