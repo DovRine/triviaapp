@@ -9,16 +9,14 @@ function assignAnswerButtonClickHandlers() {
 }
 function checkUserAnswer(e) {
   const btn = e.target;
-  const selectedAnswer = btn.innerHTML;
-  const correctAnswer = questions[currentQuestion].correct;
-  if (selectedAnswer === correctAnswer) {
-    btn.style.background = "lime";
-  } else {
-    btn.style.background = "red";
-    for (let answerBtn of answerElements) {
-      if (answerBtn.innerHTML === correctAnswer) {
-        answerBtn.style.background = "lime";
-      }
+  const selectedIdx = btn.getAttribute("data-idx");
+  setBtnColor(btn, selectedIdx);
+  colorCorrectAnswerButton();
+}
+function colorCorrectAnswerButton() {
+  for (let answerBtn of answerElements) {
+    if (isCorrectAnswer(answerBtn.getAttribute("data-idx"))) {
+      answerBtn.style.background = "lime";
     }
   }
 }
@@ -26,18 +24,29 @@ function hideForm() {
   const form = document.querySelector("#questions-form");
   form.classList.add("hide");
 }
+function isCorrectAnswer(idx) {
+  const correctAnswerIdx = questions[currentQuestion].correct;
+  return idx === correctAnswerIdx;
+}
+function setBtnColor(btn, selectedIdx) {
+  btn.style.background = isCorrectAnswer(selectedIdx) ? "lime" : "red";
+}
 function setGameQuestions(rawQuestions) {
-  questions = rawQuestions.map((q) => ({
-    question: q.question,
-    answers: shuffle([q.correct_answer, ...q.incorrect_answers]),
-    correct: q.correct_answer,
-  }));
+  questions = rawQuestions.map((q) => {
+    const answers = shuffle([q.correct_answer, ...q.incorrect_answers]);
+    return {
+      question: q.question,
+      answers,
+      correct: `${answers.indexOf(q.correct_answer)}`,
+    };
+  });
 }
 function showCurrentQuestion() {
   const { question, answers } = questions[currentQuestion];
   questionSection.querySelector(".question").innerHTML = question;
   for (let i = 0; i < answers.length; i++) {
     answerElements[i].innerHTML = answers[i];
+    answerElements[i].setAttribute("data-idx", i);
   }
   questionSection.classList.remove("hide");
 }
