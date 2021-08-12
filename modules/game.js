@@ -1,8 +1,27 @@
-import { getQuestions } from "./api.js";
-
 var questions = [];
 var currentQuestion = 0;
 
+const questionSection = document.querySelector("#question");
+const answerElements = questionSection.querySelectorAll(".answer");
+
+function assignAnswerButtonClickHandlers() {
+  answerElements.forEach((el) => el.addEventListener("click", checkUserAnswer));
+}
+function checkUserAnswer(e) {
+  const btn = e.target;
+  const selectedAnswer = btn.innerHTML;
+  const correctAnswer = questions[currentQuestion].correct;
+  if (selectedAnswer === correctAnswer) {
+    btn.style.background = "lime";
+  } else {
+    btn.style.background = "red";
+    for (let answerBtn of answerElements) {
+      if (answerBtn.innerHTML === correctAnswer) {
+        answerBtn.style.background = "lime";
+      }
+    }
+  }
+}
 function hideForm() {
   const form = document.querySelector("#questions-form");
   form.classList.add("hide");
@@ -15,10 +34,8 @@ function setGameQuestions(rawQuestions) {
   }));
 }
 function showCurrentQuestion() {
-  const questionSection = document.querySelector("#question");
   const { question, answers } = questions[currentQuestion];
   questionSection.querySelector(".question").innerHTML = question;
-  const answerElements = questionSection.querySelectorAll(".answer");
   for (let i = 0; i < answers.length; i++) {
     answerElements[i].innerHTML = answers[i];
   }
@@ -34,6 +51,7 @@ function shuffle(arr) {
 function startGame(rawQuestions) {
   setGameQuestions(rawQuestions);
   hideForm();
+  assignAnswerButtonClickHandlers();
   showCurrentQuestion();
 }
 
