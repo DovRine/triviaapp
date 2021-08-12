@@ -3,6 +3,8 @@ var currentQuestion = 0;
 
 const questionSection = document.querySelector("#question");
 const answerElements = questionSection.querySelectorAll(".answer");
+const btnNext = document.querySelector("#btnNext");
+btnNext.addEventListener("click", showNextQuestion);
 
 function assignAnswerButtonClickHandlers() {
   answerElements.forEach((el) => el.addEventListener("click", checkUserAnswer));
@@ -12,6 +14,7 @@ function checkUserAnswer(e) {
   const selectedIdx = btn.getAttribute("data-idx");
   setBtnColor(btn, selectedIdx);
   colorCorrectAnswerButton();
+  btnNext.classList.remove("hide");
 }
 function colorCorrectAnswerButton() {
   for (let answerBtn of answerElements) {
@@ -27,6 +30,11 @@ function hideForm() {
 function isCorrectAnswer(idx) {
   const correctAnswerIdx = questions[currentQuestion].correct;
   return idx === correctAnswerIdx;
+}
+function resetAnswerBtnStyles() {
+  for (let answerBtn of answerElements) {
+    answerBtn.style.background = "unset";
+  }
 }
 function setBtnColor(btn, selectedIdx) {
   btn.style.background = isCorrectAnswer(selectedIdx) ? "lime" : "red";
@@ -49,6 +57,12 @@ function showCurrentQuestion() {
     answerElements[i].setAttribute("data-idx", i);
   }
   questionSection.classList.remove("hide");
+  btnNext.classList.add("hide");
+}
+function showNextQuestion() {
+  currentQuestion++;
+  resetAnswerBtnStyles();
+  showCurrentQuestion();
 }
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
